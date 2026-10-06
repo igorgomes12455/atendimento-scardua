@@ -126,6 +126,7 @@ button{font-family:inherit}
 .botao.principal{background:var(--verde);color:var(--verde-icone)}
 .botao.principal:hover{filter:brightness(1.05);background:var(--verde)}
 .botao:disabled,.botao[aria-disabled="true"]{color:var(--txt-2);cursor:default;opacity:.7;pointer-events:none}
+.botao.voltar{min-height:40px;color:var(--txt-2);font-size:14.5px;font-weight:500}
 .botao.escolhido{opacity:1;color:var(--verde-txt);background:var(--verde-suave)}
 .botao svg{width:18px;height:18px;flex:none}
 
@@ -280,7 +281,8 @@ const LOW = {
 const IC_RESP  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z" fill="currentColor"/></svg>';
 const IC_LISTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
 const IC_LINK  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-const IC_TIQUE = '<svg class="tique" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 6l3 3 5.5-7.5M6 9l1 1 7.5-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const IC_VOLTAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const IC_TIQUE ='<svg class="tique" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 6l3 3 5.5-7.5M6 9l1 1 7.5-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 /* ---------------- Motor da conversa ---------------- */
 const $msgs = document.getElementById("mensagens");
@@ -292,6 +294,7 @@ const $itens = document.getElementById("itens");
 const reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 let sessao = 0, ultimo = null, lead, resolverTexto = null, abridor = null;
+let roteiro = [], fila = [];   // respostas dadas até aqui / respostas a refazer depois de "Voltar"
 
 function aplicarFoto(el){
   if (!FOTO_PERFIL) return;
@@ -351,6 +354,7 @@ function novaBolha(lado, texto, rodape, midia){
 
 async function bot(id, texto, rodape, midia){
   vivo(id);
+  if (fila.length) return novaBolha("bot", texto, rodape, midia);   // refazendo respostas: sem "digitando"
   $status.textContent = "digitando…"; $status.classList.add("ativo");
   const d = document.createElement("div");
   d.className = "grupo bot" + (ultimo !== "bot" ? " novo" : "");
@@ -373,16 +377,28 @@ function bloquear(){
   $campo.placeholder = "Toque em uma opção acima";
 }
 
+/* Voltar: recomeça a conversa e refaz na hora todas as respostas, menos a última */
+function botaoVoltar(){
+  const v = document.createElement("button");
+  v.type = "button"; v.className = "botao voltar"; v.innerHTML = IC_VOLTAR; v.append("Voltar");
+  v.onclick = () => inicio(roteiro.slice(0, -1));
+  return v;
+}
+
 async function escolha(id, texto, lista, opts = {}){
   const grupo = await bot(id, texto, opts.rodape, opts.midia);
+  const refeita = fila.length && lista.find(o => o.valor === fila[0]);
+  if (refeita){ fila.shift(); roteiro.push(refeita.valor); eu(refeita.rotulo); return refeita.valor; }
+  fila = [];
   bloquear();
   return new Promise(resolve => {
     const caixa = document.createElement("div"); caixa.className = "botoes";
     grupo.classList.add("com-botoes");
     const responder = (op, bt) => {
       caixa.querySelectorAll("button").forEach(x => x.disabled = true);
+      caixa.querySelector(".voltar")?.remove();
       if (bt && lista.length <= 3) bt.classList.add("escolhido");
-      eu(op.rotulo); resolve(op.valor);
+      roteiro.push(op.valor); eu(op.rotulo); resolve(op.valor);
     };
     if (lista.length <= 3){
       lista.forEach(op => {
@@ -397,15 +413,23 @@ async function escolha(id, texto, lista, opts = {}){
       bt.onclick = () => abrirFolha(bt, opts.titulo || "Escolha uma opção", lista, responder);
       caixa.append(bt);
     }
+    if (roteiro.length) caixa.append(botaoVoltar());
     grupo.append(caixa); rolar();
   });
 }
 
 async function perguntaTexto(id, texto, dica, tipo){
-  await bot(id, texto);
+  const grupo = await bot(id, texto);
   vivo(id);
+  if (fila.length){ const v = fila.shift(); roteiro.push(v); eu(v); return v; }
   return new Promise(resolve => {
-    resolverTexto = resolve;
+    let caixa = null;
+    if (roteiro.length){
+      caixa = document.createElement("div"); caixa.className = "botoes";
+      caixa.append(botaoVoltar());
+      grupo.classList.add("com-botoes"); grupo.append(caixa); rolar();
+    }
+    resolverTexto = v => { caixa?.remove(); roteiro.push(v); resolve(v); };
     $campo.disabled = false; $enviar.disabled = false;
     $campo.placeholder = dica || "Mensagem";
     $campo.autocomplete = tipo === "nome" ? "given-name" : "off";
@@ -478,17 +502,17 @@ function botoesFinais(grupo, rotulo, numero, mensagem){
   }
   const v = document.createElement("button");
   v.type = "button"; v.className = "botao"; v.innerHTML = IC_RESP; v.append("Voltar ao início");
-  v.onclick = inicio;
-  caixa.append(a, v);
+  v.onclick = () => inicio();
+  caixa.append(a, botaoVoltar(), v);
   grupo.append(caixa); rolar();
 }
 
 const campo = (k, v) => lead.campos.push([k, v]);
 
 /* ---------------- Saudação: fluxo central ---------------- */
-async function inicio(){
+async function inicio(respostas = []){
   const id = ++sessao;
-  lead = {campos:[]};
+  lead = {campos:[]}; roteiro = []; fila = [...respostas];
   resolverTexto = null; fecharFolha(false); bloquear();
   ultimo = null; $status.textContent = "online";
   $msgs.innerHTML = ""; cabecalhoConversa();
