@@ -244,6 +244,13 @@ const WHATS = {
   linhares:  "5527997922154",   // peças
   caratinga: "5533998150394"    // peças
 };
+/* Demais itens de loja (ferramentas, motores, irrigação, acessórios, outro): vendedor interno de cada loja */
+const WHATS_VENDAS = {
+  itarana:   "5527997203423",
+  pedraAzul: "5527997370095",
+  linhares:  "5527999599440",
+  caratinga: "5533998150394"    // mesmo de peças
+};
 
 /* 2) FOTO DO PERFIL (opcional): cole aqui o logo em data:image/png;base64,... */
 const FOTO_PERFIL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwBAMAAABdmfltAAAAMFBMVEX////g5O3CytuksMqFlrhnfKdJYpUrSIT55d/0y8DvsqHqmILlfmPgZUQAAAAAAAAyA82JAAAFV0lEQVR42u2YXWwUVRiGn9lZtMViT3dbYiSks1tbIE1l+xcTo3ELFYlc2EJabzQBtnDtpYkX1HjTGDHqJdJiIhrF/mBETAjFJoAJ9G8RY6AFGTQIWDZ7EAViZ2e8mNntbrslS1IvTM6T7MzOzDlvvvnO+31ns6BQKBQKhUKhUCgUCoVCoVAoFApFYfS4n6Kcm0XdDyeiZX0tlaA5DETOt73XnqoZqI2cPr/a4GSdsD/rOV16JBXcPnBne++dNwoR9mdkW8Mi0S+XLf/n6RPRovaxpz7BpwkhxjGfHw9GV6w4t/lbQeQOgNYA2JOFCW+KOFdCu/pXXtSv7Tqkz75acurybR/QCa91lpwyjr55GIrtYgCtScBsYcIrI1avLI91crHbpLPkBnYRf2omcowj2qGgaWxj8170v0sA7H27Bc6DU+Hzzi0MSG71ASLzzPxQAiAbV7e5d942r3YDOPGc1XmAsG7YJjATByn40hFo90lGTWhq6i6tA9ld9AUYdUakQFd4wuXYAJyAPeuKG+3Huj+SOE439PTA3d8+MCPvRMAYnzR4ouchXGF4lxZYf/00e+/X152DdXteATpYC/EtDefrTlK8orM4TnPz2raChQU6AI7J/ee+/oEtn17rfteesOJPJvj9Jm+tujtQub14T5J7k4lh8XPhBfJShDMjAGtuykJe9Jkos+8X5Apoch0gALSqBs8cgcZQVhRVAtCqQvm1csZmCgQ91gvMPA7oXYJEvwRfhwHTg/hiEm0q3txi7cXXYXDmOsCmUrCG3CP4Wuthpm9exCZQHgNsCVpX6TDBneDbVTkuqY7inAuHQ2JZCzq8aECzALgSDocNfgmHwwZoHZFxk4roPOErAOU73YsKMTsWZ5mgWhw73geNOKMAG0AT/gjWvh+jANMmwCUTgBrj7PGBdELnhC1XcSsA7UxiQlRrQ2KBX+BI8EUAqmA8OezOknNHLYokBbrIFbbjAFS3AH6BiYSQDi2eGQEqZkawZRTiWOYCEwhacORcRaRd4cXQbEAQJEn3WTBL2BgclZd0gS3dNUkjPR1/1tg5YWvENdQ2iADYbt6zO40l7X1DPhZta1p+H591g/AbGDgSa9IesSCFkykYGxwCiwinIJVf2PnKVWjR3Jc59rG0B5ODlIv06yXJaaq52IPJYcpFvgKx93cJIKCBJiRImJ52zZ2Vy8WE543NRBwCUvsleM0oTXlsRuYIP4DssRnhRoBUb3oJ0nH5Y6k+UWBn12P24MKI3RW1Dnuinhl9McY0WZiu1sW0XCjsc+Oaxl10T7haOCNOgQHXCOdwHldII1OAEgi4QbR5pZ6FucguqrXlt5uoT8+zHZleQX8ezybdKTLPTuTk9XFwrgziXr/ZGABtvsFs0DLOlnNFHFis8vSINyjBJLAR/OsF+EXNggrDQItmdYn0DwLdqBZ5Kq8VQIswggX4u5piE4C2ux0o26qlpzhxaKHCNZIEneZMmju3AqEN84T1drfFm9gjQHDj4yNJQPvDhJrSOXN/D4+07jDBv4EE6LtfMEEjM3bl+lxXJMyabeGmHc4gMAbAKLeA1IE4OEPNQHUIYFZC42wcaCAloWzGBH+9BaSG4uAc8AL1Ku+bieW1tWHn2AXAmaqH6e9wZtYlDt5P1j46OvXy9WTy9ppJgHPP4vSXV14+fhSuNpD6POgkZeXEVH3iyI3kqtLRCzlrEgICjek9P7ORl4Hrgtxd3iDg3QtmpuQf+3/Cc/UmY8kUU73Zjb6sbMmErVy7LXkqfP9VjpWwEl608sqWUDKp/phRKBQKhUKhUCgUCoVCoVAoFArFovwL3pjE5UnAB3MAAAAASUVORK5CYII=";
@@ -296,6 +303,20 @@ const reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let sessao = 0, ultimo = null, lead, resolverTexto = null, abridor = null;
 let roteiro = [], fila = [];   // respostas dadas até aqui / respostas a refazer depois de "Voltar"
 
+/* Registro dos passos da conversa (funil no Painel Grupo Scardua) */
+const SID = Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+const ORIGEM = (() => {
+  try { return new URLSearchParams(location.search).get("origem") || (document.referrer ? new URL(document.referrer).hostname : "direto"); }
+  catch (_) { return "direto"; }
+})();
+function registra(ev, dados){
+  try {
+    const corpo = JSON.stringify(Object.assign({sid:SID, ev, origem:ORIGEM}, dados));
+    const ok = navigator.sendBeacon && navigator.sendBeacon("/api/evento", new Blob([corpo], {type:"application/json"}));
+    if (!ok) fetch("/api/evento", {method:"POST", headers:{"Content-Type":"application/json"}, body:corpo, keepalive:true}).catch(() => {});
+  } catch (_) {}
+}
+
 function aplicarFoto(el){
   if (!FOTO_PERFIL) return;
   const i = new Image(); i.src = FOTO_PERFIL; i.alt = ""; el.textContent = ""; el.append(i);
@@ -317,7 +338,7 @@ function cabecalhoConversa(){
   aplicarFoto(card.querySelector(".avatar"));
   const data = document.createElement("div"); data.className = "chip-data"; data.textContent = "Hoje";
   const aviso = document.createElement("p"); aviso.className = "aviso";
-  aviso.innerHTML = IC_INFO + "<span>Atendimento automático da Comercial Scardua. Em poucos passos você fala com a pessoa certa.</span>";
+  aviso.innerHTML = IC_INFO + "<span>Atendimento automático da Comercial Scardua. Em poucos passos você fala com a pessoa certa. Suas respostas são registradas para agilizar seu atendimento.</span>";
   $msgs.append(card, data, aviso);
 }
 class Reinicio extends Error {}
@@ -381,7 +402,7 @@ function bloquear(){
 function botaoVoltar(){
   const v = document.createElement("button");
   v.type = "button"; v.className = "botao voltar"; v.innerHTML = IC_VOLTAR; v.append("Voltar");
-  v.onclick = () => inicio(roteiro.slice(0, -1));
+  v.onclick = () => { registra("voltar"); inicio(roteiro.slice(0, -1)); };
   return v;
 }
 
@@ -391,6 +412,7 @@ async function escolha(id, texto, lista, opts = {}){
   if (refeita){ fila.shift(); roteiro.push(refeita.valor); eu(refeita.rotulo); return refeita.valor; }
   fila = [];
   bloquear();
+  registra("pergunta", {q:texto});
   return new Promise(resolve => {
     const caixa = document.createElement("div"); caixa.className = "botoes";
     grupo.classList.add("com-botoes");
@@ -398,6 +420,7 @@ async function escolha(id, texto, lista, opts = {}){
       caixa.querySelectorAll("button").forEach(x => x.disabled = true);
       caixa.querySelector(".voltar")?.remove();
       if (bt && lista.length <= 3) bt.classList.add("escolhido");
+      registra("resp", {q:texto, v:op.rotulo});
       roteiro.push(op.valor); eu(op.rotulo); resolve(op.valor);
     };
     if (lista.length <= 3){
@@ -422,6 +445,7 @@ async function perguntaTexto(id, texto, dica, tipo){
   const grupo = await bot(id, texto);
   vivo(id);
   if (fila.length){ const v = fila.shift(); roteiro.push(v); eu(v); return v; }
+  registra("pergunta", {q:texto});
   return new Promise(resolve => {
     let caixa = null;
     if (roteiro.length){
@@ -429,7 +453,7 @@ async function perguntaTexto(id, texto, dica, tipo){
       caixa.append(botaoVoltar());
       grupo.classList.add("com-botoes"); grupo.append(caixa); rolar();
     }
-    resolverTexto = v => { caixa?.remove(); roteiro.push(v); resolve(v); };
+    resolverTexto = v => { caixa?.remove(); registra("resp", {q:texto, v}); roteiro.push(v); resolve(v); };
     $campo.disabled = false; $enviar.disabled = false;
     $campo.placeholder = dica || "Mensagem";
     $campo.autocomplete = tipo === "nome" ? "given-name" : "off";
@@ -485,24 +509,26 @@ const $menu = document.getElementById("menu"), $pop = document.getElementById("p
 function fecharMenu(){ $pop.hidden = true; $menu.setAttribute("aria-expanded","false"); }
 $menu.onclick = e => { e.stopPropagation(); const abrir = $pop.hidden; $pop.hidden = !abrir; $menu.setAttribute("aria-expanded", String(abrir)); };
 document.addEventListener("click", e => { if (!$pop.hidden && !$pop.contains(e.target)) fecharMenu(); });
-document.getElementById("recomecar").onclick = () => { fecharMenu(); inicio(); };
+document.getElementById("recomecar").onclick = () => { fecharMenu(); registra("reinicio"); inicio(); };
 
 /* Botões de link e de voltar */
-function botoesFinais(grupo, rotulo, numero, mensagem){
+function botoesFinais(grupo, rotulo, numero, mensagem, info){
   const caixa = document.createElement("div"); caixa.className = "botoes";
   grupo.classList.add("com-botoes");
+  registra("resumo", info);
   const a = document.createElement("a");
   a.className = "botao principal"; a.innerHTML = IC_LINK; a.append(rotulo);
   if (numero){
     a.href = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
     a.target = "_blank"; a.rel = "noopener";
+    a.addEventListener("click", () => registra("whats", info));
   } else {
     a.setAttribute("aria-disabled","true"); a.href = "#";
     a.lastChild.textContent = "Contato ainda não configurado";
   }
   const v = document.createElement("button");
   v.type = "button"; v.className = "botao"; v.innerHTML = IC_RESP; v.append("Voltar ao início");
-  v.onclick = () => inicio();
+  v.onclick = () => { registra("reinicio"); inicio(); };
   caixa.append(a, botaoVoltar(), v);
   grupo.append(caixa); rolar();
 }
@@ -565,6 +591,7 @@ async function lowTicket(id){
   const chave = await escolha(id, "O que você está procurando?",
     Object.entries(LOW).map(([valor, l]) => ({valor, rotulo:l.rotulo})), {titulo:"Peças e produtos"});
   const l = LOW[chave];
+  lead.low = chave;
   campo("Interesse", l.rotulo);
   campo("Procuro", await perguntaTexto(id, l.pergunta, l.dica));
   await escolherLoja(id);
@@ -581,7 +608,8 @@ async function escolherLoja(id){
 async function servicos(id){
   const g = await bot(id, "Para serviços, o atendimento é feito pela nossa central de serviços. Toque no botão abaixo para falar direto com ela.");
   botoesFinais(g, "Falar com a central de serviços", WHATS.servicos,
-    "Olá! Vim pelo Instagram da Comercial Scardua e preciso de atendimento da central de serviços.");
+    "Olá! Vim pelo Instagram da Comercial Scardua e preciso de atendimento da central de serviços.",
+    {cam:"serv", dest:"servicos"});
 }
 
 /* ---------------- Fechamento ---------------- */
@@ -596,10 +624,14 @@ async function final(id, destinoTexto, rotuloBotao){
   const g = await bot(id, `*Seu pedido*\n${linhas}`);
   const msg = ["Olá! Vim pelo Instagram da Comercial Scardua.", `Meu nome é ${lead.nome}.`,
                ...lead.campos.map(([k, v]) => `${k}: ${v}`)].join("\n");
-  const numero = lead.destino === "loja" ? WHATS[lead.loja] : WHATS.sdr;
-  botoesFinais(g, rotuloBotao, numero, msg);
+  const numero = lead.destino !== "loja" ? WHATS.sdr
+               : lead.low === "pecas" ? WHATS[lead.loja] : WHATS_VENDAS[lead.loja];
+  const dados = {Nome: lead.nome}; lead.campos.forEach(([k, v]) => { dados[k] = v; });
+  botoesFinais(g, rotuloBotao, numero, msg,
+    {cam: lead.destino !== "loja" ? "maq" : lead.low === "pecas" ? "pecas" : "loja", dest: lead.destino === "loja" ? lead.loja : "sdr", lead: dados});
 }
 
+registra("abriu");
 inicio();
 </script>
 </body>
