@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Comercial Scardua · Atendimento</title>
+<meta name="description" content="Fale com a Comercial Scardua: máquinas, implementos, peças e central de serviços.">
+<meta property="og:title" content="Comercial Scardua · Atendimento">
+<meta property="og:description" content="Máquinas, peças e atendimento para ajudar o produtor no dia a dia do campo.">
+<meta name="theme-color" content="#FFFFFF">
+<style>
+:root{
+  --fonte:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --topo:#FFFFFF; --topo-txt:#111B21; --topo-sub:#667781; --topo-linha:#E9EDEF;
+  --fundo:#EFEAE2; --doodle:var(--doodle-claro);
+  --entrada:#FFFFFF; --saida:#D9FDD3; --txt:#111B21; --txt-2:#667781; --meta-eu:#667781;
+  --verde:#1DAA61; --verde-txt:#00854D; --verde-icone:#FFFFFF; --verde-suave:#E7FCE3;
+  --campo:#FFFFFF; --tique:#53BDEB; --chip-data:#FFFFFF; --sistema:#FFF5C4; --sistema-txt:#54656F;
+  --sombra:rgba(11,20,26,.13); --folha-bg:#FFFFFF; --linha:#E9EDEF; --alca:#D1D7DB; --hover:#F5F6F6;
+  --avatar-bg:#1DAA61; --avatar-txt:#FFFFFF;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --topo:#0B141A; --topo-txt:#E9EDEF; --topo-sub:#8696A0; --topo-linha:#1F2C34;
+    --fundo:#0B141A; --doodle:var(--doodle-escuro);
+    --entrada:#202C33; --saida:#144D37; --txt:#E9EDEF; --txt-2:#8696A0; --meta-eu:rgba(233,237,239,.6);
+    --verde:#21C063; --verde-txt:#21C063; --verde-icone:#0B141A; --verde-suave:#103629;
+    --campo:#202C33; --tique:#53BDEB; --chip-data:#182229; --sistema:#182229; --sistema-txt:#FFD279;
+    --sombra:rgba(0,0,0,.3); --folha-bg:#111B21; --linha:#222D34; --alca:#3B4A54; --hover:#26353D;
+    --avatar-bg:#21C063; --avatar-txt:#0B141A;
+  }
+}
+:root[data-theme="dark"]{
+    --topo:#0B141A; --topo-txt:#E9EDEF; --topo-sub:#8696A0; --topo-linha:#1F2C34;
+    --fundo:#0B141A; --doodle:var(--doodle-escuro);
+    --entrada:#202C33; --saida:#144D37; --txt:#E9EDEF; --txt-2:#8696A0; --meta-eu:rgba(233,237,239,.6);
+    --verde:#21C063; --verde-txt:#21C063; --verde-icone:#0B141A; --verde-suave:#103629;
+    --campo:#202C33; --tique:#53BDEB; --chip-data:#182229; --sistema:#182229; --sistema-txt:#FFD279;
+    --sombra:rgba(0,0,0,.3); --folha-bg:#111B21; --linha:#222D34; --alca:#3B4A54; --hover:#26353D;
+    --avatar-bg:#21C063; --avatar-txt:#0B141A;
+  }
+*,*::before,*::after{box-sizing:inherit}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px);background:linear-gradient(var(--topo) 50%,var(--fundo) 50%)}
+body{margin:0;height:100%;background:var(--fundo);color:var(--txt);font-family:var(--fonte);-webkit-font-smoothing:antialiased}
+.app{position:relative;height:100%;max-width:560px;margin:0 auto;display:flex;flex-direction:column;
+  background-color:var(--fundo);background-image:var(--doodle);background-size:260px 260px}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+
+/* Topo da conversa */
+.topo{position:relative;z-index:2;display:flex;align-items:center;gap:12px;min-height:64px;padding:8px 6px 8px 14px;
+  background:var(--topo);color:var(--topo-txt);border-bottom:1px solid var(--topo-linha);flex:none}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex:none;overflow:hidden;
+  background:var(--avatar-bg);color:var(--avatar-txt);font-weight:700;font-size:15px;letter-spacing:.02em}
+.avatar img{width:100%;height:100%;object-fit:cover;background:#fff}
+.avatar:has(img){background:#fff;box-shadow:0 0 0 1px var(--topo-linha)}
+.perfil .avatar:has(img){box-shadow:0 0 0 1px var(--linha),0 0 0 5px var(--verde-suave)}
+.contato{flex:1;min-width:0}
+.nome{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{margin:1px 0 0;font-size:13px;color:var(--topo-sub);transition:color .2s}
+.status.ativo{color:var(--verde-txt)}
+.menu-btn{width:44px;height:44px;border:0;border-radius:50%;background:transparent;color:inherit;display:grid;place-items:center;cursor:pointer}
+.menu-btn:hover{background:var(--hover)}
+.menu-btn svg{width:22px;height:22px}
+.pop{position:absolute;top:56px;right:10px;z-index:5;min-width:220px;padding:6px 0;border-radius:12px;background:var(--folha-bg);color:var(--txt);box-shadow:0 6px 24px rgba(11,20,26,.2)}
+.pop[hidden]{display:none}
+.pop button{display:block;width:100%;padding:13px 20px;border:0;background:none;color:inherit;font-size:15px;text-align:left;cursor:pointer}
+.pop button:hover{background:var(--hover)}
+
+/* Mensagens */
+.mensagens{flex:1 1 auto;overflow-y:auto;padding:12px 14px 10px;display:flex;flex-direction:column;gap:2px}
+
+/* Cartão de perfil comercial */
+.perfil{align-self:center;width:min(100%,320px);margin:8px 0 14px;padding:22px 18px 18px;border-radius:16px;
+  background:var(--entrada);box-shadow:0 1px .5px var(--sombra);text-align:center}
+.perfil .avatar{width:88px;height:88px;margin:0 auto 12px;font-size:30px;box-shadow:0 0 0 4px var(--verde-suave)}
+.perfil h1{margin:0;font-size:20px;font-weight:600;letter-spacing:-.015em;color:var(--txt)}
+.perfil .conta{display:inline-flex;align-items:center;gap:5px;margin:5px 0 0;font-size:13.5px;color:var(--txt-2)}
+.perfil .conta svg{width:16px;height:16px;color:var(--verde-txt)}
+.perfil .desc{margin:12px auto 0;max-width:30ch;font-size:15px;line-height:1.4;color:var(--txt)}
+.perfil .lojas{margin:8px 0 0;font-size:13px;line-height:1.4;color:var(--txt-2)}
+
+.chip-data{align-self:center;margin:2px 0 8px;padding:5px 12px;border-radius:8px;background:var(--chip-data);color:var(--txt-2);font-size:12.5px;font-weight:500;box-shadow:0 1px .5px var(--sombra)}
+.aviso{align-self:center;display:flex;gap:6px;align-items:flex-start;max-width:92%;margin:0 0 10px;padding:7px 12px;border-radius:8px;background:var(--sistema);color:var(--sistema-txt);font-size:12.5px;line-height:1.4;text-align:center;box-shadow:0 1px .5px var(--sombra)}
+
+/* Balões */
+.grupo{display:flex;flex-direction:column;gap:3px;max-width:85%}
+.grupo.bot{align-self:flex-start}
+.grupo.eu{align-self:flex-end}
+.grupo.novo{margin-top:9px}
+.grupo.com-botoes{min-width:min(286px,85%)}
+.grupo.entra{animation:entra .18s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(4px) scale(.98)}to{opacity:1;transform:none}}
+.bolha{position:relative;padding:6px 9px 8px 10px;border-radius:10px;font-size:15.5px;line-height:1.4;color:var(--txt);box-shadow:0 1px .5px var(--sombra);word-wrap:break-word}
+.bot .bolha{background:var(--entrada)}
+.eu .bolha{background:var(--saida)}
+.bot .bolha.cauda{border-top-left-radius:0}
+.eu .bolha.cauda{border-top-right-radius:0}
+.bot .bolha.cauda::before,.eu .bolha.cauda::before{content:"";position:absolute;top:0;width:8px;height:13px}
+.bot .bolha.cauda::before{left:-8px;background:var(--entrada);clip-path:polygon(0 0,100% 0,100% 100%)}
+.eu .bolha.cauda::before{right:-8px;background:var(--saida);clip-path:polygon(0 0,100% 0,0 100%)}
+.texto{white-space:pre-line}
+.texto strong{font-weight:600}
+.rodape-msg{margin-top:4px;font-size:13px;color:var(--txt-2)}
+.bot .reserva::after{content:"";display:inline-block;width:42px;height:1px}
+.eu .reserva::after{content:"";display:inline-block;width:62px;height:1px}
+.meta{position:absolute;right:8px;bottom:4px;display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--txt-2)}
+.eu .meta{color:var(--meta-eu)}
+.tique{width:16px;height:11px;color:var(--meta-eu);transition:color .25s}
+.tique.lida{color:var(--tique)}
+.digitando-bolha{display:inline-flex;gap:4px;padding:11px 12px}
+.digitando-bolha i{width:7px;height:7px;border-radius:50%;background:var(--txt-2);opacity:.4;animation:pisca 1.1s infinite}
+.digitando-bolha i:nth-child(2){animation-delay:.15s}.digitando-bolha i:nth-child(3){animation-delay:.3s}
+@keyframes pisca{30%{opacity:1;transform:translateY(-2px)}}
+
+/* Botões de resposta */
+.botoes{display:flex;flex-direction:column;gap:3px}
+.botao{display:flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 12px;border:0;border-radius:10px;
+  background:var(--entrada);color:var(--verde-txt);font-size:15.5px;font-weight:600;line-height:1.25;text-align:center;text-decoration:none;
+  box-shadow:0 1px .5px var(--sombra);cursor:pointer;transition:transform .08s}
+.botao:hover{background:var(--hover)}
+.botao:active{transform:scale(.985)}
+.botao.principal{background:var(--verde);color:var(--verde-icone)}
+.botao.principal:hover{filter:brightness(1.05);background:var(--verde)}
+.botao:disabled,.botao[aria-disabled="true"]{color:var(--txt-2);cursor:default;opacity:.7;pointer-events:none}
+.botao.escolhido{opacity:1;color:var(--verde-txt);background:var(--verde-suave)}
+.botao svg{width:18px;height:18px;flex:none}
+
+/* Barra de digitação: flutua sobre o papel de parede */
+.composer{display:flex;align-items:flex-end;gap:6px;padding:6px 8px 10px;flex:none}
+.campo-caixa{flex:1;min-width:0;display:flex;align-items:center;gap:8px;min-height:48px;padding:0 14px 0 12px;border-radius:24px;
+  background:var(--campo);box-shadow:0 1px .5px var(--sombra)}
+.campo-caixa:focus-within{box-shadow:0 0 0 2px var(--verde)}
+.campo-caixa svg{width:24px;height:24px;flex:none;color:var(--txt-2)}
+.campo{flex:1;min-width:0;height:46px;padding:0;border:0;background:transparent;color:var(--txt);font:16px var(--fonte)}
+.campo:focus-visible{outline:none}
+.campo::placeholder{color:var(--txt-2)}
+.enviar{width:48px;height:48px;flex:none;display:grid;place-items:center;border:0;border-radius:50%;background:var(--verde);color:var(--verde-icone);
+  box-shadow:0 1px 2px var(--sombra);cursor:pointer;transition:transform .1s,opacity .2s}
+.enviar:active{transform:scale(.94)}
+.enviar:disabled{opacity:.55;cursor:default}
+.enviar svg{width:22px;height:22px}
+
+/* Lista de opções (folha inferior) */
+.veu{position:fixed;inset:0;z-index:10;display:flex;align-items:flex-end;justify-content:center;background:rgba(11,20,26,.45)}
+.veu[hidden]{display:none}
+.folha{width:100%;max-width:560px;max-height:80%;display:flex;flex-direction:column;border-radius:20px 20px 0 0;
+  background:var(--folha-bg);color:var(--txt);padding-bottom:env(safe-area-inset-bottom,0px);animation:sobe .22s ease-out}
+@keyframes sobe{from{transform:translateY(28px);opacity:.6}to{transform:none;opacity:1}}
+.alca{width:36px;height:4px;margin:8px auto 0;border-radius:2px;background:var(--alca)}
+.folha-topo{display:flex;align-items:center;padding:4px 8px 8px 6px;border-bottom:1px solid var(--linha)}
+.folha-topo h2{flex:1;margin:0 44px 0 0;font-size:17px;font-weight:600;text-align:center}
+.fechar{width:44px;height:44px;border:0;border-radius:50%;background:none;color:var(--txt-2);display:grid;place-items:center;cursor:pointer}
+.fechar svg{width:22px;height:22px}
+.itens{list-style:none;margin:0;padding:4px 0 12px;overflow-y:auto}
+.itens li+li .item{border-top:1px solid var(--linha)}
+.item{display:flex;align-items:center;gap:14px;width:100%;padding:14px 22px;border:0;background:none;color:inherit;text-align:left;cursor:pointer}
+.item:hover{background:var(--hover)}
+.item span:first-child{flex:1;min-width:0}
+.item strong{display:block;font-size:16px;font-weight:500}
+.item small{display:block;margin-top:2px;font-size:13.5px;color:var(--txt-2);line-height:1.35}
+.radio{width:22px;height:22px;flex:none;border:2px solid var(--txt-2);border-radius:50%;transition:border-color .15s,box-shadow .15s}
+.item.marcado .radio{border-color:var(--verde);box-shadow:inset 0 0 0 4px var(--folha-bg),inset 0 0 0 11px var(--verde)}
+
+@media (prefers-reduced-motion:reduce){.folha,.digitando-bolha i,.grupo.entra{animation:none}.tique,.status,.radio{transition:none}}
+</style>
+<script>
+/* Papel de parede: desenhos do campo no estilo do WhatsApp */
+(function () {
+  const desenho = c => `<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260' viewBox='0 0 260 260'><g fill='none' stroke='${c}' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'
+    ><g transform='translate(42 44) rotate(-6) scale(1)'><circle cx='-8' cy='6' r='8'/><circle cx='-8' cy='6' r='2.5'/><circle cx='11' cy='9' r='5'/><path d='M-15 -1V-14H-3L-1 -1ZM-1 -1H13L16 4M7 -1V-8'/></g
+    ><g transform='translate(128 32) rotate(14) scale(1)'><path d='M0 10V-2M0 2C-6 2-9-3-9-8C-3-8 0-4 0 2M0-2C5-2 8-6 8-11C3-11 0-7 0-2'/></g
+    ><g transform='translate(214 42) rotate(0) scale(1)'><circle r='7' stroke-width='3.2' stroke-dasharray='3.1 2.4'/><circle r='2.6'/></g
+    ><g transform='translate(88 108) rotate(-12) scale(1)'><path d='M0-10C4-4 7 0 7 4A7 7 0 0 1-7 4C-7 0-4-4 0-10Z'/></g
+    ><g transform='translate(176 102) rotate(18) scale(1)'><path d='M-8 9C-2 3 2-2 8-10M4-5C8-4 10 0 9 3C5 2 3-1 4-5'/><circle cx='1' cy='0' r='3'/><circle cx='-4' cy='5' r='3'/></g
+    ><g transform='translate(234 146) rotate(0) scale(0.9)'><circle r='4.5'/><path d='M0-8V-11M0 8V11M-8 0H-11M8 0H11M-5.7-5.7-7.8-7.8M5.7 5.7 7.8 7.8M-5.7 5.7-7.8 7.8M5.7-5.7 7.8-7.8'/></g
+    ><g transform='translate(36 166) rotate(25) scale(1)'><path d='M-9 9 1-1M1-1C-1-6 3-11 8-10L5-7 6-4 9-3 12-6C13-1 8 3 3 1'/></g
+    ><g transform='translate(122 176) rotate(-14) scale(1)'><path d='M0 12V-11M0-6C-4-7-5-10-4-12-1-11 0-9 0-6ZM0-6C4-7 5-10 4-12 1-11 0-9 0-6ZM0 0C-4-1-5-4-4-6-1-5 0-3 0 0ZM0 0C4-1 5-4 4-6 1-5 0-3 0 0ZM0 6C-4 5-5 2-4 0-1 1 0 3 0 6ZM0 6C4 5 5 2 4 0 1 1 0 3 0 6Z'/></g
+    ><g transform='translate(210 214) rotate(5) scale(1)'><path d='M-10 10V-2L0-10 10-2V10ZM-4 10V2H4V10M-4 2 4 10M4 2-4 10'/></g
+    ><g transform='translate(66 234) rotate(-8) scale(1)'><path d='M-8-6H8A3 3 0 0 1 11-3V4A3 3 0 0 1 8 7H-2L-7 11V7H-8A3 3 0 0 1-11 4V-3A3 3 0 0 1-8-6Z'/></g
+    ><g transform='translate(150 236) rotate(8) scale(0.75)'><circle cx='-8' cy='6' r='8'/><circle cx='-8' cy='6' r='2.5'/><circle cx='11' cy='9' r='5'/><path d='M-15 -1V-14H-3L-1 -1ZM-1 -1H13L16 4M7 -1V-8'/></g
+    ><circle cx='102' cy='62' r='1.6' fill='${c}' stroke='none'/><circle cx='22' cy='100' r='1.6' fill='${c}' stroke='none'/><circle cx='162' cy='146' r='1.6' fill='${c}' stroke='none'/><circle cx='248' cy='184' r='1.6' fill='${c}' stroke='none'/><circle cx='250' cy='92' r='1.6' fill='${c}' stroke='none'/><circle cx='178' cy='196' r='1.6' fill='${c}' stroke='none'/><circle cx='20' cy='214' r='1.6' fill='${c}' stroke='none'/></g></svg>`;
+  const url = c => 'url("data:image/svg+xml,' + encodeURIComponent(desenho(c)) + '")';
+  const r = document.documentElement.style;
+  r.setProperty("--doodle-claro", url("rgba(98,78,52,.14)"));
+  r.setProperty("--doodle-escuro", url("rgba(233,237,239,.055)"));
+})();
+</script>
+</head>
+<body>
+<div class="app">
+  <header class="topo">
+    <div class="avatar" id="avatar" aria-hidden="true">CS</div>
+    <div class="contato">
+      <p class="nome">Comercial Scardua</p>
+      <p class="status" id="status" aria-live="polite">online</p>
+    </div>
+    <button class="menu-btn" id="menu" type="button" aria-label="Mais opções" aria-haspopup="true" aria-expanded="false">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><circle cx="12" cy="19" r="2" fill="currentColor"/></svg>
+    </button>
+    <div class="pop" id="pop" hidden><button type="button" id="recomecar">Recomeçar conversa</button></div>
+  </header>
+
+  <main class="mensagens" id="mensagens" aria-live="polite"></main>
+
+  <div class="composer">
+    <div class="campo-caixa">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="9" cy="10" r="1.2" fill="currentColor"/><circle cx="15" cy="10" r="1.2" fill="currentColor"/><path d="M8.2 14a4.4 4.4 0 0 0 7.6 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <input class="campo" id="campo" type="text" placeholder="Toque em uma opção acima" aria-label="Mensagem" disabled enterkeyhint="send" autocomplete="off">
+    </div>
+    <button class="enviar" id="enviar" type="button" aria-label="Enviar" disabled>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 20.4 21 12 3.4 3.6v6.4l12.6 2-12.6 2z" fill="currentColor"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="veu" id="veu" hidden>
+  <div class="folha" role="dialog" aria-modal="true" aria-labelledby="folha-titulo">
+    <div class="alca" aria-hidden="true"></div>
+    <div class="folha-topo">
+      <button class="fechar" id="fechar" type="button" aria-label="Fechar">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <h2 id="folha-titulo">Escolha uma opção</h2>
+    </div>
+    <ul class="itens" id="itens"></ul>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   1) NÚMEROS DE WHATSAPP — 55 + DDD + número, só dígitos
+   Preenchidos com os contatos da bio atual e do site. Confirmar antes de publicar.
+   ========================================================================== */
+const WHATS = {
+  sdr:       "552732212393",   // SDR: máquinas, implementos, linha amarela e empilhadeira
+  servicos:  "552737204500",   // central de serviços
+  itarana:   "5527997203423",
+  pedraAzul: "5527997370095",
+  linhares:  "5527996682822",
+  caratinga: "5533998097735"
+};
+
+/* 2) FOTO DO PERFIL (opcional): cole aqui o logo em data:image/png;base64,... */
+const FOTO_PERFIL = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALAAAACwBAMAAABdmfltAAAAMFBMVEX////g5O3CytuksMqFlrhnfKdJYpUrSIT55d/0y8DvsqHqmILlfmPgZUQAAAAAAAAyA82JAAAFV0lEQVR42u2YXWwUVRiGn9lZtMViT3dbYiSks1tbIE1l+xcTo3ELFYlc2EJabzQBtnDtpYkX1HjTGDHqJdJiIhrF/mBETAjFJoAJ9G8RY6AFGTQIWDZ7EAViZ2e8mNntbrslS1IvTM6T7MzOzDlvvvnO+31ns6BQKBQKhUKhUCgUCoVCoVAoFApFYfS4n6Kcm0XdDyeiZX0tlaA5DETOt73XnqoZqI2cPr/a4GSdsD/rOV16JBXcPnBne++dNwoR9mdkW8Mi0S+XLf/n6RPRovaxpz7BpwkhxjGfHw9GV6w4t/lbQeQOgNYA2JOFCW+KOFdCu/pXXtSv7Tqkz75acurybR/QCa91lpwyjr55GIrtYgCtScBsYcIrI1avLI91crHbpLPkBnYRf2omcowj2qGgaWxj8170v0sA7H27Bc6DU+Hzzi0MSG71ASLzzPxQAiAbV7e5d942r3YDOPGc1XmAsG7YJjATByn40hFo90lGTWhq6i6tA9ld9AUYdUakQFd4wuXYAJyAPeuKG+3Huj+SOE439PTA3d8+MCPvRMAYnzR4ouchXGF4lxZYf/00e+/X152DdXteATpYC/EtDefrTlK8orM4TnPz2raChQU6AI7J/ee+/oEtn17rfteesOJPJvj9Jm+tujtQub14T5J7k4lh8XPhBfJShDMjAGtuykJe9Jkos+8X5Apoch0gALSqBs8cgcZQVhRVAtCqQvm1csZmCgQ91gvMPA7oXYJEvwRfhwHTg/hiEm0q3txi7cXXYXDmOsCmUrCG3CP4Wuthpm9exCZQHgNsCVpX6TDBneDbVTkuqY7inAuHQ2JZCzq8aECzALgSDocNfgmHwwZoHZFxk4roPOErAOU73YsKMTsWZ5mgWhw73geNOKMAG0AT/gjWvh+jANMmwCUTgBrj7PGBdELnhC1XcSsA7UxiQlRrQ2KBX+BI8EUAqmA8OezOknNHLYokBbrIFbbjAFS3AH6BiYSQDi2eGQEqZkawZRTiWOYCEwhacORcRaRd4cXQbEAQJEn3WTBL2BgclZd0gS3dNUkjPR1/1tg5YWvENdQ2iADYbt6zO40l7X1DPhZta1p+H591g/AbGDgSa9IesSCFkykYGxwCiwinIJVf2PnKVWjR3Jc59rG0B5ODlIv06yXJaaq52IPJYcpFvgKx93cJIKCBJiRImJ52zZ2Vy8WE543NRBwCUvsleM0oTXlsRuYIP4DssRnhRoBUb3oJ0nH5Y6k+UWBn12P24MKI3RW1Dnuinhl9McY0WZiu1sW0XCjsc+Oaxl10T7haOCNOgQHXCOdwHldII1OAEgi4QbR5pZ6FucguqrXlt5uoT8+zHZleQX8ezybdKTLPTuTk9XFwrgziXr/ZGABtvsFs0DLOlnNFHFis8vSINyjBJLAR/OsF+EXNggrDQItmdYn0DwLdqBZ5Kq8VQIswggX4u5piE4C2ux0o26qlpzhxaKHCNZIEneZMmju3AqEN84T1drfFm9gjQHDj4yNJQPvDhJrSOXN/D4+07jDBv4EE6LtfMEEjM3bl+lxXJMyabeGmHc4gMAbAKLeA1IE4OEPNQHUIYFZC42wcaCAloWzGBH+9BaSG4uAc8AL1Ku+bieW1tWHn2AXAmaqH6e9wZtYlDt5P1j46OvXy9WTy9ppJgHPP4vSXV14+fhSuNpD6POgkZeXEVH3iyI3kqtLRCzlrEgICjek9P7ORl4Hrgtxd3iDg3QtmpuQf+3/Cc/UmY8kUU73Zjb6sbMmErVy7LXkqfP9VjpWwEl608sqWUDKp/phRKBQKhUKhUCgUCoVCoVAoFArFovwL3pjE5UnAB3MAAAAASUVORK5CYII=";
+/* ========================================================================== */
+
+const LOJAS = [
+  {valor:"itarana",   rotulo:"Itarana",    sub:"Espírito Santo"},
+  {valor:"pedraAzul", rotulo:"Pedra Azul", sub:"Espírito Santo"},
+  {valor:"linhares",  rotulo:"Linhares",   sub:"Espírito Santo"},
+  {valor:"caratinga", rotulo:"Caratinga",  sub:"Minas Gerais"}
+];
+const nomeLoja = id => LOJAS.find(l => l.valor === id).rotulo;
+
+const MAQUINAS = {
+  trator:      {rotulo:"Trator ou microtrator", sub:"Para lavoura, horta e pecuária", pergunta:"Em que você vai usar o trator?",
+                usos:["Lavoura de café","Pecuária","Horta e fruticultura","Outro uso"]},
+  implemento:  {rotulo:"Implemento agrícola", sub:"Preparo, plantio, pulverização e mais", pergunta:"Qual trabalho o implemento vai fazer?",
+                usos:["Preparo de solo","Plantio","Pulverização","Roçagem","Transporte","Outro"]},
+  amarela:     {rotulo:"Linha amarela", sub:"Construção civil e mineração", pergunta:"Para qual tipo de serviço?",
+                usos:["Obra e terraplenagem","Mineração","Locação","Outro"]},
+  empilhadeira:{rotulo:"Empilhadeira", sub:"Movimentação de carga", pergunta:"Onde ela vai trabalhar?",
+                usos:["Armazém ou depósito","Distribuidora","Indústria","Outro"]}
+};
+
+const LOW = {
+  pecas:       {rotulo:"Peças",       pergunta:"Qual peça você precisa? Se souber, informe a marca e o modelo da máquina.", dica:"Ex.: filtro de óleo Agritech 1155"},
+  ferramentas: {rotulo:"Ferramentas", pergunta:"Qual ferramenta você procura?", dica:"Ex.: roçadeira, motosserra"},
+  motores:     {rotulo:"Motores",     pergunta:"Qual motor você procura? Se souber, informe a potência.", dica:"Ex.: motor estacionário a diesel"},
+  irrigacao:   {rotulo:"Irrigação",   pergunta:"O que você precisa para a irrigação?", dica:"Ex.: aspersores, mangueira, bomba"},
+  acessorios:  {rotulo:"Acessórios",  pergunta:"Qual acessório você procura?", dica:"Ex.: banco, retrovisor, farol"},
+  outro:       {rotulo:"Outro item",  pergunta:"Descreva o que você precisa.", dica:"Mensagem"}
+};
+
+/* ---------------- Ícones ---------------- */
+const IC_RESP  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11z" fill="currentColor"/></svg>';
+const IC_LISTA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></svg>';
+const IC_LINK  = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const IC_TIQUE = '<svg class="tique" viewBox="0 0 16 11" aria-hidden="true"><path d="M1 6l3 3 5.5-7.5M6 9l1 1 7.5-9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+/* ---------------- Motor da conversa ---------------- */
+const $msgs = document.getElementById("mensagens");
+const $status = document.getElementById("status");
+const $campo = document.getElementById("campo");
+const $enviar = document.getElementById("enviar");
+const $veu = document.getElementById("veu");
+const $itens = document.getElementById("itens");
+const reduzido = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let sessao = 0, ultimo = null, lead, resolverTexto = null, abridor = null;
+
+function aplicarFoto(el){
+  if (!FOTO_PERFIL) return;
+  const i = new Image(); i.src = FOTO_PERFIL; i.alt = ""; el.textContent = ""; el.append(i);
+}
+aplicarFoto(document.getElementById("avatar"));
+
+const IC_LOJA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v9a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-9M3 5l1.5-2h15L21 5v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 20v-5h4v5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+const IC_INFO = '<svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 11v6M12 7.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+
+function cabecalhoConversa(){
+  const card = document.createElement("section");
+  card.className = "perfil";
+  card.setAttribute("aria-label", "Perfil da Comercial Scardua");
+  card.innerHTML = `<div class="avatar" aria-hidden="true">CS</div>
+    <h1>Comercial Scardua</h1>
+    <p class="conta">${IC_LOJA}Conta comercial</p>
+    <p class="desc">Máquinas, peças e atendimento para ajudar o produtor no dia a dia do campo.</p>
+    <p class="lojas">Itarana, Linhares, Pedra Azul e Caratinga</p>`;
+  aplicarFoto(card.querySelector(".avatar"));
+  const data = document.createElement("div"); data.className = "chip-data"; data.textContent = "Hoje";
+  const aviso = document.createElement("p"); aviso.className = "aviso";
+  aviso.innerHTML = IC_INFO + "<span>Atendimento automático da Comercial Scardua. Em poucos passos você fala com a pessoa certa.</span>";
+  $msgs.append(card, data, aviso);
+}
+class Reinicio extends Error {}
+const vivo = id => { if (id !== sessao) throw new Reinicio(); };
+const espera = ms => new Promise(r => setTimeout(r, ms));
+const rolar = () => { $msgs.scrollTop = $msgs.scrollHeight; };
+const hora = () => new Date().toLocaleTimeString("pt-BR", {hour:"2-digit", minute:"2-digit"});
+
+function formata(el, texto){
+  texto.split(/(\*[^*\n]+\*)/).forEach(p => {
+    if (/^\*[^*\n]+\*$/.test(p)){ const b = document.createElement("strong"); b.textContent = p.slice(1, -1); el.append(b); }
+    else if (p) el.append(document.createTextNode(p));
+  });
+}
+
+function novaBolha(lado, texto, rodape, midia){
+  const grupo = document.createElement("div");
+  grupo.className = `grupo ${lado} entra`;
+  const b = document.createElement("div");
+  b.className = "bolha";
+  if (ultimo !== lado){ b.classList.add("cauda"); grupo.classList.add("novo"); }
+  ultimo = lado;
+  if (midia){ b.classList.add("com-midia"); b.append(midia); }
+  const t = document.createElement("div"); t.className = "texto"; formata(t, texto); b.append(t);
+  if (rodape){ const r = document.createElement("div"); r.className = "rodape-msg"; r.textContent = rodape; b.append(r); }
+  b.lastElementChild.classList.add("reserva");
+  const meta = document.createElement("span"); meta.className = "meta";
+  meta.innerHTML = `<time>${hora()}</time>${lado === "eu" ? IC_TIQUE : ""}`;
+  b.append(meta);
+  grupo.append(b);
+  $msgs.append(grupo); rolar();
+  return grupo;
+}
+
+async function bot(id, texto, rodape, midia){
+  vivo(id);
+  $status.textContent = "digitando…"; $status.classList.add("ativo");
+  const d = document.createElement("div");
+  d.className = "grupo bot" + (ultimo !== "bot" ? " novo" : "");
+  d.innerHTML = '<div class="bolha' + (ultimo !== "bot" ? ' cauda' : '') + '"><span class="digitando-bolha" aria-hidden="true"><i></i><i></i><i></i></span></div>';
+  $msgs.append(d); rolar();
+  await espera(reduzido ? 200 : Math.min(500 + texto.length * 11, 1400));
+  vivo(id);
+  d.remove();
+  $status.textContent = "online"; $status.classList.remove("ativo");
+  return novaBolha("bot", texto, rodape, midia);
+}
+
+function eu(texto){
+  const g = novaBolha("eu", texto);
+  setTimeout(() => g.querySelector(".tique")?.classList.add("lida"), reduzido ? 0 : 700);
+}
+
+function bloquear(){
+  $campo.disabled = true; $enviar.disabled = true; $campo.value = "";
+  $campo.placeholder = "Toque em uma opção acima";
+}
+
+async function escolha(id, texto, lista, opts = {}){
+  const grupo = await bot(id, texto, opts.rodape, opts.midia);
+  bloquear();
+  return new Promise(resolve => {
+    const caixa = document.createElement("div"); caixa.className = "botoes";
+    grupo.classList.add("com-botoes");
+    const responder = (op, bt) => {
+      caixa.querySelectorAll("button").forEach(x => x.disabled = true);
+      if (bt && lista.length <= 3) bt.classList.add("escolhido");
+      eu(op.rotulo); resolve(op.valor);
+    };
+    if (lista.length <= 3){
+      lista.forEach(op => {
+        const bt = document.createElement("button");
+        bt.type = "button"; bt.className = "botao"; bt.innerHTML = IC_RESP; bt.append(op.rotulo);
+        bt.onclick = () => responder(op, bt);
+        caixa.append(bt);
+      });
+    } else {
+      const bt = document.createElement("button");
+      bt.type = "button"; bt.className = "botao"; bt.innerHTML = IC_LISTA; bt.append(opts.botao || "Ver opções");
+      bt.onclick = () => abrirFolha(bt, opts.titulo || "Escolha uma opção", lista, responder);
+      caixa.append(bt);
+    }
+    grupo.append(caixa); rolar();
+  });
+}
+
+async function perguntaTexto(id, texto, dica, tipo){
+  await bot(id, texto);
+  vivo(id);
+  return new Promise(resolve => {
+    resolverTexto = resolve;
+    $campo.disabled = false; $enviar.disabled = false;
+    $campo.placeholder = dica || "Mensagem";
+    $campo.autocomplete = tipo === "nome" ? "given-name" : "off";
+    $campo.focus({preventScroll:true});
+  });
+}
+
+function enviarTexto(){
+  if (!resolverTexto) return;
+  const v = $campo.value.trim();
+  if (v.length < 2){ $campo.focus(); return; }
+  const r = resolverTexto; resolverTexto = null;
+  bloquear(); eu(v); r(v);
+}
+$enviar.onclick = enviarTexto;
+$campo.addEventListener("keydown", e => { if (e.key === "Enter"){ e.preventDefault(); enviarTexto(); } });
+
+/* Lista de opções */
+function abrirFolha(origem, titulo, lista, cb){
+  abridor = origem;
+  document.getElementById("folha-titulo").textContent = titulo;
+  $itens.innerHTML = "";
+  lista.forEach(op => {
+    const li = document.createElement("li");
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "item";
+    const s = document.createElement("span");
+    const st = document.createElement("strong"); st.textContent = op.rotulo; s.append(st);
+    if (op.sub){ const sm = document.createElement("small"); sm.textContent = op.sub; s.append(sm); }
+    const r = document.createElement("span"); r.className = "radio"; r.setAttribute("aria-hidden","true");
+    b.append(s, r);
+    b.onclick = () => {
+      if (b.classList.contains("marcado")) return;
+      b.classList.add("marcado");
+      setTimeout(() => { fecharFolha(false); cb(op); }, reduzido ? 0 : 220);
+    };
+    li.append(b); $itens.append(li);
+  });
+  $veu.hidden = false;
+  $itens.querySelector("button")?.focus();
+}
+function fecharFolha(devolverFoco = true){
+  if ($veu.hidden) return;
+  $veu.hidden = true;
+  if (devolverFoco) abridor?.focus();
+}
+document.getElementById("fechar").onclick = () => fecharFolha();
+$veu.addEventListener("click", e => { if (e.target === $veu) fecharFolha(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape"){ fecharFolha(); fecharMenu(); } });
+
+/* Menu do topo */
+const $menu = document.getElementById("menu"), $pop = document.getElementById("pop");
+function fecharMenu(){ $pop.hidden = true; $menu.setAttribute("aria-expanded","false"); }
+$menu.onclick = e => { e.stopPropagation(); const abrir = $pop.hidden; $pop.hidden = !abrir; $menu.setAttribute("aria-expanded", String(abrir)); };
+document.addEventListener("click", e => { if (!$pop.hidden && !$pop.contains(e.target)) fecharMenu(); });
+document.getElementById("recomecar").onclick = () => { fecharMenu(); inicio(); };
+
+/* Botões de link e de voltar */
+function botoesFinais(grupo, rotulo, numero, mensagem){
+  const caixa = document.createElement("div"); caixa.className = "botoes";
+  grupo.classList.add("com-botoes");
+  const a = document.createElement("a");
+  a.className = "botao principal"; a.innerHTML = IC_LINK; a.append(rotulo);
+  if (numero){
+    a.href = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    a.target = "_blank"; a.rel = "noopener";
+  } else {
+    a.setAttribute("aria-disabled","true"); a.href = "#";
+    a.lastChild.textContent = "Contato ainda não configurado";
+  }
+  const v = document.createElement("button");
+  v.type = "button"; v.className = "botao"; v.innerHTML = IC_RESP; v.append("Voltar ao início");
+  v.onclick = inicio;
+  caixa.append(a, v);
+  grupo.append(caixa); rolar();
+}
+
+const campo = (k, v) => lead.campos.push([k, v]);
+
+/* ---------------- Saudação: fluxo central ---------------- */
+async function inicio(){
+  const id = ++sessao;
+  lead = {campos:[]};
+  resolverTexto = null; fecharFolha(false); bloquear();
+  ultimo = null; $status.textContent = "online";
+  $msgs.innerHTML = ""; cabecalhoConversa();
+  try {
+    await bot(id, "Oi! 👋 Sou o assistente virtual da Comercial Scardua.");
+    const caminho = await escolha(id,
+      "Como posso te ajudar hoje?",
+      [
+        {valor:"high",  rotulo:"Comprar máquina ou implemento", sub:"Tratores, implementos, linha amarela e empilhadeira"},
+        {valor:"low",   rotulo:"Peças, ferramentas e irrigação", sub:"Motores, acessórios e mais, direto na loja"},
+        {valor:"serv",  rotulo:"Central de serviços", sub:"Atendimento de serviços"}
+      ],
+      {botao:"Ver opções", titulo:"Como posso te ajudar?"});
+    if (caminho === "high")  await highTicket(id);
+    if (caminho === "low")   await lowTicket(id);
+    if (caminho === "serv")  await servicos(id);
+  } catch (e) { if (!(e instanceof Reinicio)) throw e; }
+}
+
+/* ---------------- High ticket → SDR ---------------- */
+async function highTicket(id){
+  lead.destino = "sdr";
+  const chave = await escolha(id, "Qual máquina você está procurando?",
+    Object.entries(MAQUINAS).map(([valor, m]) => ({valor, rotulo:m.rotulo, sub:m.sub})),
+    {titulo:"Máquinas e implementos"});
+  const m = MAQUINAS[chave];
+  campo("Interesse", m.rotulo);
+  campo("Uso", await escolha(id, m.pergunta, m.usos.map(u => ({valor:u, rotulo:u})), {titulo:"Uso"}));
+  await regiaoCidade(id);
+  campo("Quando pretendo comprar", await escolha(id, "E quando você pretende comprar?",
+    ["Este mês","Em até 3 meses","Mais para frente","Só pesquisando"].map(p => ({valor:p, rotulo:p})),
+    {titulo:"Prazo de compra"}));
+  await pedirNome(id);
+  await final(id, "o nosso time comercial", "Falar com o vendedor");
+}
+
+async function regiaoCidade(id){
+  const r = await escolha(id, "Você está em qual estado?", [
+    {valor:"ES", rotulo:"Espírito Santo"},
+    {valor:"MG", rotulo:"Minas Gerais"}
+  ], {titulo:"Seu estado"});
+  const regiao = {ES:"ES", MG:"MG"}[r];
+  const cidade = await perguntaTexto(id, "Qual é a sua cidade?", "Ex.: Santa Teresa");
+  campo("Cidade", `${cidade} (${regiao})`);
+}
+
+/* ---------------- Low ticket → unidade mais próxima ---------------- */
+async function lowTicket(id){
+  lead.destino = "loja";
+  const chave = await escolha(id, "O que você está procurando?",
+    Object.entries(LOW).map(([valor, l]) => ({valor, rotulo:l.rotulo})), {titulo:"Peças e produtos"});
+  const l = LOW[chave];
+  campo("Interesse", l.rotulo);
+  campo("Procuro", await perguntaTexto(id, l.pergunta, l.dica));
+  await escolherLoja(id);
+  await pedirNome(id);
+  await final(id, `a loja de ${nomeLoja(lead.loja)}`, `Falar com a loja de ${nomeLoja(lead.loja)}`);
+}
+
+async function escolherLoja(id){
+  lead.loja = await escolha(id, "Qual das nossas unidades fica mais perto de você?", LOJAS, {titulo:"Unidades"});
+  campo("Loja", nomeLoja(lead.loja));
+}
+
+/* ---------------- Central de serviços ---------------- */
+async function servicos(id){
+  const g = await bot(id, "Para serviços, o atendimento é feito pela nossa central de serviços. Toque no botão abaixo para falar direto com ela.");
+  botoesFinais(g, "Falar com a central de serviços", WHATS.servicos,
+    "Olá! Vim pelo Instagram da Comercial Scardua e preciso de atendimento da central de serviços.");
+}
+
+/* ---------------- Fechamento ---------------- */
+async function pedirNome(id){
+  lead.nome = await perguntaTexto(id, "Para finalizar, qual é o seu nome?", "Seu nome", "nome");
+}
+
+async function final(id, destinoTexto, rotuloBotao){
+  const primeiro = lead.nome.split(" ")[0];
+  await bot(id, `Obrigado, ${primeiro}! Confira se está tudo certo. Ao tocar no botão, a conversa com ${destinoTexto} abre com esta mensagem pronta.`);
+  const linhas = [["Nome", lead.nome], ...lead.campos].map(([k, v]) => `${k}: ${v}`).join("\n");
+  const g = await bot(id, `*Seu pedido*\n${linhas}`);
+  const msg = ["Olá! Vim pelo Instagram da Comercial Scardua.", `Meu nome é ${lead.nome}.`,
+               ...lead.campos.map(([k, v]) => `${k}: ${v}`)].join("\n");
+  const numero = lead.destino === "loja" ? WHATS[lead.loja] : WHATS.sdr;
+  botoesFinais(g, rotuloBotao, numero, msg);
+}
+
+inicio();
+</script>
+</body>
+</html>
